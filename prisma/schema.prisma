@@ -1,0 +1,28 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  name      String?
+  step      String   @default("START") // Aquí controlamos el flujo HCI
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  citas     Cita[]
+}
+
+model Cita {
+  id        String   @id @default(uuid())
+  fecha     String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
