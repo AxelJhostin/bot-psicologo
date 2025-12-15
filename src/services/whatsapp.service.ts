@@ -55,7 +55,8 @@ export class WhatsAppService {
 
             console.log(`✅ Botones enviados a ${to}`);
         } catch (error: any) {
-            console.error('❌ Error enviando botones a Facebook:', error.response?.data || error.message);
+            // TRUCO: Usamos JSON.stringify(..., null, 2) para que nos muestre TODO el objeto bonito
+            console.error('❌ ERROR FACEBOOK DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
         }
     }
 }
