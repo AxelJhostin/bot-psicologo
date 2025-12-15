@@ -25,6 +25,7 @@ export class WhatsAppService {
         } catch (error: any) {
             // TRUCO: Usamos JSON.stringify(..., null, 2) para que nos muestre TODO el objeto bonito
             console.error('❌ ERROR FACEBOOK DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
+            console.error('❌ ERROR DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
         }
     }
 
@@ -57,6 +58,7 @@ export class WhatsAppService {
         } catch (error: any) {
             // TRUCO: Usamos JSON.stringify(..., null, 2) para que nos muestre TODO el objeto bonito
             console.error('❌ ERROR FACEBOOK DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
+            console.error('❌ ERROR DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
         }
     }
 }
