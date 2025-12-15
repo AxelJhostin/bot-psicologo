@@ -23,8 +23,8 @@ export class WhatsAppService {
 
             console.log(`✅ Mensaje enviado a ${to}: ${text}`);
         } catch (error: any) {
-            // Este log nos dirá EXACTAMENTE por qué falla Facebook si vuelve a pasar
-            console.error('❌ Error enviando mensaje a Facebook:', error.response?.data || error.message);
+            // TRUCO: Usamos JSON.stringify(..., null, 2) para que nos muestre TODO el objeto bonito
+            console.error('❌ ERROR FACEBOOK DETALLADO:', JSON.stringify(error.response?.data || error.message, null, 2));
         }
     }
 
