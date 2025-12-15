@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 export class WhatsAppService {
-    // ⚠️ CAMBIO 1: Quitamos la variable estática HEADERS de aquí arriba para evitar el error de carga
+    // ⚠️ ELIMINAMOS la variable HEADERS de aquí arriba para evitar el error de lectura temprana
 
     static async sendMessage(to: string, text: string) {
         try {
-            // ⚠️ CAMBIO 2: Definimos la URL y los Headers DENTRO de la función
-            // Actualicé la versión a v21.0 que es la más estable actual
-            const url = `https://graph.facebook.com/v21.0/${process.env.META_PHONE_ID}/messages`;
+            // ⚠️ CORRECCIÓN: Definimos la URL y los Headers DENTRO de la función
+            // Así aseguramos que el TOKEN ya existe cuando se ejecuta
+            const url = `https://graph.facebook.com/v17.0/${process.env.META_PHONE_ID}/messages`;
             
             const headers = {
                 'Authorization': `Bearer ${process.env.META_API_TOKEN}`,
@@ -21,16 +21,16 @@ export class WhatsAppService {
                 text: { body: text }
             }, { headers: headers });
 
-            console.log(`✅ Mensaje enviado a ${to}`); // Log para confirmar éxito
+            console.log(`✅ Mensaje enviado a ${to}: ${text}`);
         } catch (error: any) {
-            // Log mejorado para ver qué dice Facebook si falla
-            console.error('❌ Error enviando mensaje:', error.response?.data || error.message);
+            // Este log nos dirá EXACTAMENTE por qué falla Facebook si vuelve a pasar
+            console.error('❌ Error enviando mensaje a Facebook:', error.response?.data || error.message);
         }
     }
 
     static async sendInteractiveButtons(to: string, bodyText: string, buttons: {id: string, title: string}[]) {
         try {
-            const url = `https://graph.facebook.com/v21.0/${process.env.META_PHONE_ID}/messages`;
+            const url = `https://graph.facebook.com/v17.0/${process.env.META_PHONE_ID}/messages`;
             
             const headers = {
                 'Authorization': `Bearer ${process.env.META_API_TOKEN}`,
@@ -53,9 +53,9 @@ export class WhatsAppService {
                 }
             }, { headers: headers });
 
-             console.log(`✅ Botones enviados a ${to}`);
+            console.log(`✅ Botones enviados a ${to}`);
         } catch (error: any) {
-            console.error('❌ Error enviando botones:', error.response?.data || error.message);
+            console.error('❌ Error enviando botones a Facebook:', error.response?.data || error.message);
         }
     }
 }
